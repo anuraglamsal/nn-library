@@ -87,7 +87,7 @@ class ImageNet():
         writer = DatasetWriter(
             self.ffcv_format_file,
             {
-                'image': RGBImageField(write_mode = 'smart'),
+                'image': RGBImageField(max_resolution = 256),
                 'label': IntField()
             },
             num_workers = self.num_workers,
