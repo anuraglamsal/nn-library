@@ -9,8 +9,9 @@ from nn_lib.datasets import (
     CIFAR100DataModule,
     ImageNetDataModule,
     CocoDetectionDataModule,
-)
 
+    ImageNet
+)
 
 class TestDatasetsExist(unittest.TestCase):
     @classmethod
@@ -57,3 +58,8 @@ class TestDatasetsExist(unittest.TestCase):
         dl = data.train_dataloader()
         batch = next(iter(dl))
         self.assertEqual(batch[0].shape[1:], data._default_shape)
+
+    def test_imagenet_new_train(self):
+        dl_ffcv = ImageNet(train=True, data_dir=self.data_root)
+        batch = next(iter(dl_ffcv))
+        self.assertEqual(batch[0].shape[1:], ImageNet._default_shape)

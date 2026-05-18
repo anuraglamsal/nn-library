@@ -3,7 +3,6 @@ from torchvision.datasets import ImageFolder
 from nn_lib.datasets.base import TorchvisionDataModuleBase, TorchvisionDatasetType
 import yaml
 
-
 class ImageNetDataModule(TorchvisionDataModuleBase):
     name = "imagenet"
     _default_shape = (3, 224, 224)

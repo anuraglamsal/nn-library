@@ -10,7 +10,6 @@ from nn_lib.datasets.transforms import get_default_transforms_v2
 from nn_lib.datasets.enums import TorchvisionDatasetType
 import torchvision.transforms.v2 as tv_transforms
 
-
 class TorchvisionDataModuleBase(metaclass=ABCMeta):
     _default_shape: tuple[int, int, int] = None
     name: str = None
