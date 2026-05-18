@@ -46,8 +46,8 @@ class ImageNet():
 
         instance.train = train
         instance.data_dir = data_dir
-        instance.ffcv_format_save_dir = ffcv_format_save_dir if ffcv_format_save_dir is not None else os.path.join(data_dir, "ffcv_format")
-        instance.ffcv_format_file = os.path.join(instance.ffcv_format_save_dir, "imagenet_train.beton" if instance.train else "imagenet_val.beton")
+        instance.ffcv_format_file = os.path.join(ffcv_format_save_dir if ffcv_format_save_dir is not None else data_dir, 
+                                                 "imagenet_train.beton" if instance.train else "imagenet_val.beton")
 
         # ffcv settings.
         instance.batch_size = batch_size
