@@ -5,3 +5,4 @@ from .imagenet import ImageNetDataModule
 from .mnist import MNISTDataModule
 from .transforms import get_tv_default_transforms
 from .vanhateren import VanHateren
+from .imagenet_new import ImageNet
