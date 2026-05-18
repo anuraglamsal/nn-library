@@ -1,17 +1,12 @@
 import os
-from PIL import Image
+import torch
+import numpy as np
 from torchvision.datasets import ImageFolder
 from ffcv.loader import Loader, OrderOption
 from ffcv.fields import IntField, RGBImageField
 from ffcv.writer import DatasetWriter
 from ffcv.fields.decoders import RandomResizedCropRGBImageDecoder, IntDecoder
 from ffcv.transforms import ToTensor, ToDevice, ToTorchImage, NormalizeImage
-import numpy as np
-
-def load_image(path):
-    image = Image.open(path).convert('RGB')  
-
-    return image
 
 mean = np.array([0.485, 0.456, 0.406]) * 255
 std = np.array([0.229, 0.224, 0.225]) * 255
@@ -29,14 +24,14 @@ class ImageNet():
                 pipeline_image: list = [
                     RandomResizedCropRGBImageDecoder((224, 224), (0.08, 1.0)), 
                     ToTensor(), 
-                    ToDevice('cuda', non_blocking = True),
+                    ToDevice(torch.device('cuda'), non_blocking = True),
                     ToTorchImage(),
                     NormalizeImage(mean, std, np.float16),
                 ],
                 pipeline_label: list = [
                     IntDecoder(),
                     ToTensor(), 
-                    ToDevice('cuda', non_blocking = True)
+                    ToDevice(torch.device('cuda'), non_blocking = True)
                 ],
                 os_cache: bool = True,
                 seed: int = 42,
@@ -80,7 +75,6 @@ class ImageNet():
         # We need an indexable dataset for FFCV. 
         indexable_dataset = ImageFolder(
             root = os.path.join(self.data_dir, "train" if self.train else "val"),
-            #loader = load_image
         ) 
 
         # Create a DatasetWriter to convert the indexable dataset to FFCV format and save it to disk.

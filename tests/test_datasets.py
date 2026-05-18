@@ -18,6 +18,7 @@ class TestDatasetsExist(unittest.TestCase):
     def setUpClass(cls):
         load_dotenv()
         cls.data_root = getenv("DATA_ROOT", "data")
+        cls.beton_save_dir = getenv("BETON_SAVE_DIR", None)
 
     def test_mnist_train(self):
         data = MNISTDataModule(root_dir=self.data_root)
@@ -60,6 +61,6 @@ class TestDatasetsExist(unittest.TestCase):
         self.assertEqual(batch[0].shape[1:], data._default_shape)
 
     def test_imagenet_new_train(self):
-        dl_ffcv = ImageNet(train=True, data_dir=self.data_root)
+        dl_ffcv = ImageNet(train=True, data_dir=self.data_root, ffcv_format_save_dir=self.beton_save_dir)
         batch = next(iter(dl_ffcv))
         self.assertEqual(batch[0].shape[1:], ImageNet._default_shape)
