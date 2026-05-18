@@ -80,7 +80,7 @@ class ImageNet():
         # We need an indexable dataset for FFCV. 
         indexable_dataset = ImageFolder(
             root = os.path.join(self.data_dir, "train" if self.train else "val"),
-            loader = load_image
+            #loader = load_image
         ) 
 
         # Create a DatasetWriter to convert the indexable dataset to FFCV format and save it to disk.
