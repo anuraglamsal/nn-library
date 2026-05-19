@@ -5,7 +5,7 @@ from torchvision.datasets import ImageFolder
 from ffcv.loader import Loader, OrderOption
 from ffcv.fields import IntField, RGBImageField
 from ffcv.writer import DatasetWriter
-from ffcv.fields.decoders import RandomResizedCropRGBImageDecoder, IntDecoder
+from ffcv.fields.decoders import SimpleRGBImageDecoder, IntDecoder
 from ffcv.transforms import ToTensor, ToDevice, ToTorchImage, NormalizeImage
 
 mean = np.array([0.485, 0.456, 0.406]) * 255
@@ -22,7 +22,7 @@ class ImageNet():
                 num_workers: int = 4,
                 order_option: OrderOption = OrderOption.RANDOM,
                 pipeline_image: list = [
-                    RandomResizedCropRGBImageDecoder((224, 224), (0.08, 1.0)), 
+                    SimpleRGBImageDecoder(),
                     ToTensor(), 
                     ToDevice(torch.device('cuda'), non_blocking = True),
                     ToTorchImage(),
@@ -81,7 +81,7 @@ class ImageNet():
         writer = DatasetWriter(
             self.ffcv_format_file,
             {
-                'image': RGBImageField(write_mode = 'jpg'),
+                'image': RGBImageField(write_mode = 'jpg', max_resolution = 224),
                 'label': IntField()
             },
             num_workers = self.num_workers,
